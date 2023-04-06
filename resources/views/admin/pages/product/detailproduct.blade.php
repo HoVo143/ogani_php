@@ -1,6 +1,6 @@
 @extends('admin.layout.admin')
 @section('title')
-  User
+  product
 @endsection
 @section('admin')
 
@@ -11,7 +11,7 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1 class="m-0 text-dark">User </h1>
+            <h1 class="m-0 text-dark">product </h1>
           </div><!-- /.col -->
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
@@ -34,7 +34,7 @@
               <div class="card card-primary ">
                 <div class="card-header d-flex justify-content-between">
                   <h3 class="card-title">Quick Example</h3>
-                  <a href="{{ route('admin.user.userlist')}}">
+                  <a href="{{ route('admin.product.productlist')}}">
                     <h3 class="card-title">Create</h3>
                   </a>
                 </div>
@@ -42,7 +42,7 @@
                 <!-- form start -->
 
 
-                <form role="form" method="POST" action="{{route('admin.product.update')}}" enctype="multipart/form-data">
+                <form role="form" method="POST" action="{{route('admin.product.update',[$product->id])}}" enctype="multipart/form-data">
                     @csrf
                     {{-- <input type="hidden" name="_token" value="{{ csrf_token()}}" > --}}
                     <div class="card-body">
@@ -103,17 +103,17 @@
   
                       <div class="form-group">
                         <label for="image_url">Product image</label>
-                        <input type="file" class="form-control" 
-                        id="image_url" name="image_url" placeholder="Product image" value="{{$product->image_url}}">
+                        <input type="file" class="form-control"id="image_url" name="image_url" placeholder="Product image" value="{{$product->image_url}}">
                       </div>
+                   
                       @error('image_url')
                       <span class="text-danger">
                         {{$message}}
                     </span>
                     @enderror
+                    {{-- <input type="hidden" value="{{$product->id}}" name="id"> --}}
                     </div>
                     <!-- /.card-body -->
-                    <input type="hidden" value="{{$product->id}}" name="id">
     
                     <div class="card-footer">
                       <button type="submit" class="btn btn-primary">Update</button>

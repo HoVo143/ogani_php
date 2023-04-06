@@ -32,29 +32,22 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $product= DB::table('product')->get();
+        $product= $this->modelproduct->getAll();
+
         return view('admin.pages.product.productlist', ['product' => $product]);
 
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
+
     public function create()
     {
         //
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
+    public function show( $id)
     {
-        $product= DB::select('SELECT * FROM product WHERE id = :id', ['id' =>$id]);
+        // $product= DB::select('SELECT * FROM product WHERE id = :id', ['id' =>$id]);
+        $product=$this->modelproduct->showAll($id);
         return view('admin.pages.product.detailproduct')->with('product', $product[0]);
     }
 
@@ -69,9 +62,13 @@ class ProductController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateRequest $request, $id)
+    public function update(Request $request, $id)
     {
-        $bool = $this->modelproduct->updateProduct($request,  $id);
+        // dd($request);
+        // $request->$request;
+        // $request->except('_token');
+        $bool = $this->modelproduct->updateProduct($request,$id);
+
         $message = 'That bai';
         if($bool){
             $message = 'thanh cong';

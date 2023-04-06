@@ -52,12 +52,13 @@ Route::prefix('admin')->group(function (){ // thêm /admin sẵn
  
 
     Route::get('/product/productlist', [ProductController::class , 'index'])->name('admin.product.productlist');
+
     Route::get('/product/productlist/{id}', [ProductController::class , 'show'])->name('admin.product.detail');
     Route::get('/product/delete/{id}', [ProductController::class , 'destroy'])->name('admin.product.delete');
-    Route::post('/product/update', [ProductController::class , 'update'])->name('admin.product.update');
+    Route::post('/product/update/{id}', [ProductController::class , 'update'])->name('admin.product.update');
 
     Route::post('/product/save', [ProductController::class, 'store'])->name('admin.product.save');
-    
+        
 
 
 

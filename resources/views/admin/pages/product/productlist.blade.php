@@ -56,16 +56,23 @@
                       <tr>
                         <td>{{$products->name}}</td>
                         <td>{{ $products->discount_price}}</td>
-                        <td>{{ $products->price}}</td>
-                        <td>{{ $products->description}}</td>
+                        <td>{{number_format( $products->price, 2)}}</td>
+                        <td>{!!$products->description!!}</td>
                         <td>
                           @if($products->status)
-                          <button class="btn btn-danger">{{$products->status}}</button>
+                          <button class="btn btn-danger">show</button>
                         @else
-                          <button class="btn btn-dark">{{$products->status}}</button>
+                          <button class="btn btn-dark">hide</button>
                         @endif
                       </td>
-                        <td>{{ $products->image_url}}</td>
+                        <td>
+                          @if ($products->image_url !== null)
+                            <img style="width: 150px; height:150px;" src="{{asset('images'). '/'.$products->image_url}}" alt="">
+                          @else
+                            <img style="width: 150px; height:150px; background:#ffff;">
+                          @endif
+                          {{-- <img style="width: 150px; height:150px;" src="{{asset('images'). '/'.$products->image_url}}" alt=""> --}}
+                        </td>
                         <td>{{ Carbon\Carbon::parse($products->created_at)->format('d/m/Y H:i:s')}}</td>
 
                         <td>

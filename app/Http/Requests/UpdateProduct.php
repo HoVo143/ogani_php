@@ -25,7 +25,7 @@ class UpdateRequest extends FormRequest
         return [
             'name' => 'required', 
             'status' => 'required',
-            'image_url' => 'mimes:png,jpg,gif,jpeg|max:10240',
+            // 'image_url' => 'mimes:png,jpg,gif,jpeg|max:10240',
         ];
 
     }

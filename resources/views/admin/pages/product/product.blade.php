@@ -35,7 +35,7 @@
                 <div class="card-header d-flex justify-content-between">
                   <h3 class="card-title">Quick Example</h3>
                   <a href="{{ route('admin.product.productlist')}}">
-                    <h3 class="card-title {{ Request::route()->getName() === 'admin.product.productlist'}}">Create</h3>
+                    <h3 class="card-title ">Create</h3>
                   </a>
                 </div>
                 <!-- /.card-header -->
@@ -77,6 +77,7 @@
                     <div class="form-group">
                       <label for="description">Description</label>
                       <textarea name="description" id="description" class="form-control " cols="30" rows="3"></textarea>
+
                      @error('description')
                         <span class="text-danger">
                           {{$message}}
@@ -101,7 +102,9 @@
                     <div class="form-group">
                       <label for="image_url">Product image</label>
                       <input type="file" class="form-control" id="image_url" name="image_url" placeholder="Product image">
+                      
                     </div>
+                    
                     @error('image_url')
                     <span class="text-danger">
                       {{$message}}
