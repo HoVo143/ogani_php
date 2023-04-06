@@ -103,9 +103,14 @@
   
                       <div class="form-group">
                         <label for="image_url">Product image</label>
-                        <input type="file" class="form-control"id="image_url" name="image_url" placeholder="Product image" value="{{$product->image_url}}">
+                        <input type="file" class="form-control" 
+                        id="image_url" name="image_url" placeholder="Product image" value="{{$product->image_url}}">
                       </div>
-                   
+                      @if ($product->image_url !== null)
+                            <img style="width: 150px; height:150px;" src="{{asset('images'). '/'.$product->image_url}}" alt="">
+                          @else
+                            <img style="width: 150px; height:150px; background:#ffff;">
+                          @endif
                       @error('image_url')
                       <span class="text-danger">
                         {{$message}}
