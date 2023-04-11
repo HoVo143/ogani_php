@@ -104,7 +104,20 @@
                       </span>
                       @enderror
                     </div>
-                    
+                    {{-- admin --}}
+                    <div class="form-group">
+                      <label for="is_admin">admin</label>
+                      <select name="is_admin" id="is_admin" class="form-control">
+                        <option value=""> -----pelease---- </option>
+                        <option value="1">admin</option>
+                        <option value="0">user</option>
+                      </select>
+                      @error('is_admin')
+                        <span class="text-danger">
+                          {{$message}}
+                      </span>
+                      @enderror
+                    </div>
                   </div>
                   <!-- /.card-body -->
   

@@ -8,6 +8,7 @@ use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Foundation\Auth\User as AuthUser;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 
@@ -46,8 +47,8 @@ class UserController extends Controller
         $request['password'] = Hash::make($request['password']); // mã hóa password
         // dd($request);
 
-        DB::insert('INSERT INTO user_form ( name ,phone, email, password ,status ,created_at, updated_at) 
-        values ( ?, ?, ?, ?, ?, ?, ?)', 
+        DB::insert('INSERT INTO user_form ( name ,phone, email, password ,status , is_admin, created_at, updated_at) 
+        values ( ?, ?, ?, ?, ?, ?, ?, ?)', 
         // [ $request['name'], $request['phone'], $request['email'], $request['password'], date('Y-m-d H:i:s'), date('Y-m-d H:i:s')]);
             array_values($request)
 
@@ -134,6 +135,33 @@ class UserController extends Controller
         // flash data in laravel
         return redirect()->route('admin.user.userlist')->with('message',$message); // key la message
         //redirect về link 'admin.user.userlist' kèm theo biến message 
+    }
+
+
+    public function giaodienlogin(){
+
+        return view('client.pages.login.login');
+    }
+
+    public function dangnhap(Request $request){
+        $credentials = $request->validate([
+            'email' => ['required', 'email'],
+            'password' => ['required']
+        ]);
+        // dd($credentials);
+        if(Auth::attempt($credentials))
+        {
+            return redirect()->route('home');
+        }
+
+        return back()->withErrors([
+            'email' => 'ten dang nhap hoac mat khau khong dung',
+        ])->onlyInput('email');
+    }
+
+    public function dangxuat(){
+        Auth::logout();
+        return redirect()->route('home');
     }
 }
 // BUỔI SAU XÓA MỀM

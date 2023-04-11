@@ -66,6 +66,9 @@
                         <li class="{{ Request::route()->getName() === 'contact' ? 'active': '' }}">
                             <a href="{{ route('contact')}}">Contact</a>
                         </li>
+                        <li class="{{ Request::route()->getName() === 'giaodienlogin' ? 'active': '' }}">
+                            <a href="{{ route('giaodienlogin')}}">Login</a>
+                        </li>
                     </ul>
                 </nav>
             </div>

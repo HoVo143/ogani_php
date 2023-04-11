@@ -7,12 +7,18 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ShopController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
-
+use Illuminate\Support\Facades\Auth;
 // client
-Route::get('/', [HomeController::class, 'index'])->name('home');
+// Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/shop', [ShopController::class, 'index'])->name('shop');
 Route::get('/blog', [BlogController::class, 'index'])->name('blog');
 Route::get('/contact', [ContactController::class, 'index'])->name('contact');
+
+// login
+Route::get('/giaodienlogin', [UserController::class, 'giaodienlogin'])->name('giaodienlogin');
+Route::post('/dangnhap', [UserController::class, 'dangnhap'])->name('dangnhap');
+Route::post('/dangxuat', [UserController::class, 'dangxuat'])->name('dangxuat');
+// end login
 
 // Route::get('/', function () {
 //     return view('client.pages.home');
@@ -51,10 +57,11 @@ Route::prefix('admin')->group(function (){ // thêm /admin sẵn
     
  
 
-    Route::get('/product/productlist', [ProductController::class , 'index'])->name('admin.product.productlist');
+    Route::get('/product/productlist', [ProductController::class , 'index'])->name('admin.product.productlist')->middleware('auth.admin');
 
     Route::get('/product/productlist/{id}', [ProductController::class , 'show'])->name('admin.product.detail');
     Route::get('/product/delete/{id}', [ProductController::class , 'destroy'])->name('admin.product.delete');
+    
     Route::post('/product/update/{id}', [ProductController::class , 'update'])->name('admin.product.update');
 
     Route::post('/product/save', [ProductController::class, 'store'])->name('admin.product.save');
@@ -73,5 +80,11 @@ Route::prefix('admin')->group(function (){ // thêm /admin sẵn
     
 
 });
+
+
+
+Auth::routes();
+
+Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 
