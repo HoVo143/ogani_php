@@ -3,6 +3,8 @@
 use App\Http\Controllers\BlogController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\ProductCategory;
+use App\Http\Controllers\ProductCategoryController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ShopController;
 use App\Http\Controllers\UserController;
@@ -37,7 +39,7 @@ Route::post('/dangxuat', [UserController::class, 'dangxuat'])->name('dangxuat');
 // })->name('contact');
 
 // admin
-Route::prefix('admin')->group(function (){ // thêm /admin sẵn
+Route::prefix('admin')->middleware('auth.admin')->group(function (){ // thêm /admin sẵn
 
     Route::get('/', function () {
         return view('admin.pages.index');
@@ -55,9 +57,8 @@ Route::prefix('admin')->group(function (){ // thêm /admin sẵn
         return view('admin.pages.blog');
     })->name('admin.blog');
     
- 
-
-    Route::get('/product/productlist', [ProductController::class , 'index'])->name('admin.product.productlist')->middleware('auth.admin');
+    //product
+    Route::get('/product/productlist', [ProductController::class , 'index'])->name('admin.product.productlist');
 
     Route::get('/product/productlist/{id}', [ProductController::class , 'show'])->name('admin.product.detail');
     Route::get('/product/delete/{id}', [ProductController::class , 'destroy'])->name('admin.product.delete');
@@ -65,11 +66,8 @@ Route::prefix('admin')->group(function (){ // thêm /admin sẵn
     Route::post('/product/update/{id}', [ProductController::class , 'update'])->name('admin.product.update');
 
     Route::post('/product/save', [ProductController::class, 'store'])->name('admin.product.save');
-        
-
-
-
-
+    
+    //user
     Route::get('/user/userlist', [UserController::class , 'index'])->name('admin.user.userlist');
     Route::get('/user/userlist/{id}', [UserController::class , 'show'])->name('admin.user.detail');
     Route::get('/user/delete/{id}', [UserController::class , 'destroy'])->name('admin.user.delete');
@@ -77,7 +75,12 @@ Route::prefix('admin')->group(function (){ // thêm /admin sẵn
     // 
     Route::post('/user/save', [UserController::class, 'store'])->name('admin.user.save');
    
+    //product_category
     
+    // Route::get('/product_category', [ProductCategoryController::class, 'create'])->name('admin.product_category');
+    Route::resource('product-category', ProductCategoryController::class);
+    // Route::resource('product-category-list', ProductCategoryController::class);
+
 
 });
 

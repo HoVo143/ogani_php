@@ -42,7 +42,13 @@
                 </a>
               </li>
               <li class="nav-item">
-                <a href="{{ route('admin.blog')}}" class="nav-link  {{ Request::route()->getName() === 'admin.blog' ? 'active': '' }}">
+                <a href="{{ route('product-category.create')}}" class="nav-link  {{ Request::route()->getName() === 'product-category.create' ? 'active': '' }}">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Product category</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Blog</p>
                 </a>

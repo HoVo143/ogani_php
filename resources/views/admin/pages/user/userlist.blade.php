@@ -52,6 +52,7 @@
                     <th>email</th>
                     <th>Created at</th>
                     <th>Status</th>
+                    <th>Admin/user</th>
                     <th>Action</th>
                     {{-- <th>CSS grade</th> --}}
                   </tr>
@@ -68,6 +69,13 @@
                             <button class="btn btn-danger">{{$users->status}}</button>
                           @else
                             <button class="btn btn-dark">{{$users->status}}</button>
+                          @endif
+                        </td>
+                        <td>
+                          @if($users->is_admin)
+                            <button class="btn btn-danger">Admin</button>
+                          @else
+                            <button class="btn btn-dark">User</button>
                           @endif
                         </td>
                         {{-- gianh cho code PHP THUAN <td>{{ date_format(date_create($users->created_at),'d/m/y H:i:s')}}</td> --}}
