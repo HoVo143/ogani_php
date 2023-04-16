@@ -49,9 +49,9 @@ Route::prefix('admin')->middleware('auth.admin')->group(function (){ // thêm /a
         return view('admin.pages.user.user');
     })->name('admin.user');
     
-    Route::get('/product', function () {
-        return view('admin.pages.product.product');
-    })->name('admin.product');
+    // Route::get('/product', function () {
+    //     return view('admin.pages.product.product');
+    // })->name('admin.product');
     
     Route::get('/blog', function () {
         return view('admin.pages.blog');

@@ -31,9 +31,9 @@
             <div class="card">
               <div class="card-header d-flex justify-content-between">
                 <h3 class="card-title">DataTable with minimal features & hover style</h3>
-                <a href="{{ route('admin.product')}}">
+                {{-- <a href="{{ route('admin.product')}}">
                     <h3 class="card-title {{ Request::route()->getName() === 'admin.product' ? 'active': '' }}">Create</h3>
-                  </a>
+                  </a> --}}
               </div>
               <!-- /.card-header -->
               <div class="card-body">

@@ -35,8 +35,8 @@
                         <h3 class="card-title">DataTable with default features</h3>
                     </div>
                     <div class="col-md-4">
-                        <a href="{{ route('product-category.create') }}"
-                            class="btn btn-primary float-right">Create</a>
+                        {{-- <a href="{{ route('product-category.create') }}"
+                            class="btn btn-primary float-right">Create</a> --}}
                     </div>
                 </div>
             </div>
