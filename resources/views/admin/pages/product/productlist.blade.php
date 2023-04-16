@@ -41,45 +41,55 @@
                   <thead>
                   <tr>
                     <th>Product name</th>
-                    <th>discount price</th>
+                    {{-- <th>discount price</th>
                     <th>Product price</th>
                     <th>Description</th>
                     <th>status</th>
                     <th>Image</th>
                     <th>Created at</th>
-                    <th>Action</th>
-
+                    <th>Action</th> --}}
+                    <th>Description</th>
+                    <th>Price</th>
+                    <th>Status</th>
+                    <th>Image</th>
+                    <th>Category Name</th>
+                    <th>Option</th>
                   </tr>
                   </thead>
                   <tbody>
-                    @forelse ( $product as $products)
+                    @forelse ( $products as $product)
                       <tr>
-                        <td>{{$products->name}}</td>
-                        <td>{{ $products->discount_price}}</td>
-                        <td>{{number_format( $products->price, 2)}}</td>
-                        <td>{!!$products->description!!}</td>
-                        <td>
-                          @if($products->status)
+                        <td>{{$product->name}}</td>
+                        <td>{!!$product->description!!}</td>
+                        {{-- <td>{{ $product->discount_price}}</td> --}}
+                        <td>{{number_format( $product->price, 2)}}</td>
+                        <td>{{ $product->status ? 'Show' : 'Hide' }}</td>
+
+                        {{-- <td>
+                          @if($product->status)
                           <button class="btn btn-danger">show</button>
                         @else
                           <button class="btn btn-dark">hide</button>
                         @endif
-                      </td>
+                      </td> --}}
                         <td>
-                          @if ($products->image_url !== null)
-                            <img style="width: 150px; height:150px;" src="{{asset('images'). '/'.$products->image_url}}" alt="">
+                          @if ($product->image_url !== null)
+                            <img style="width: 150px; height:150px;" src="{{asset('images'). '/'.$product->image_url}}" alt="">
                           @else
                             <img style="width: 150px; height:150px; background:#ffff;">
                           @endif
-                          {{-- <img style="width: 150px; height:150px;" src="{{asset('images'). '/'.$products->image_url}}" alt=""> --}}
+                          {{-- <img style="width: 150px; height:150px;" src="{{asset('images'). '/'.$product->image_url}}" alt=""> --}}
                         </td>
-                        <td>{{ Carbon\Carbon::parse($products->created_at)->format('d/m/Y H:i:s')}}</td>
-
+                        {{-- <td>{{ Carbon\Carbon::parse($product->created_at)->format('d/m/Y H:i:s')}}</td> --}}
+                        <td>{{ $product->category->name }}</td>
                         <td>
-                          <a href="{{ route('admin.product.detail', [$products->id])}}" class="btn btn-primary">Detail</a>
-                          <a onclick="return confirm('xoa ko ?');" href="{{ route('admin.product.delete', [$products->id])}}" class="btn btn-danger">Delete</a>
+                          <a href="{{ route('admin.product.detail', ['id' => $product->id]) }}">Detail</a>
+                       </td>
+                        {{-- <td>
+                          <a href="{{ route('admin.product.detail', [$product->id])}}" class="btn btn-primary">Detail</a>
+                          <a onclick="return confirm('xoa ko ?');" href="{{ route('admin.product.delete', [$product->id])}}" class="btn btn-danger">Delete</a>
 
-                         </td>
+                         </td> --}}
                       </tr>
                       @empty
                       <tr>

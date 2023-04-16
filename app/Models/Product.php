@@ -5,77 +5,103 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Product extends Model
 {
-    use HasFactory;
-    public function getAll(){
-        return DB::table('product')->get();
-    }
-    public function addProduct($request)
+    use HasFactory, SoftDeletes ;
+
+    protected $table = 'product';
+
+    protected $fillable = [
+        'name',
+        'short_description',
+        'description',
+        'information',
+        'price',
+        'discount_price',
+        'qty',
+        'weight',
+        'shipping',
+        'image_url',
+        'status',
+        'slug',
+        'product_category_id'
+    ];
+
+    
+    public function category()
     {
-        $imageName = null;
-        if($request->image_url){ //uniqid khi tải ảnh mới trùng tên ảnh cũ , ảnh ms sẽ đè lên và xóa ảnh cũ 
-            $imageName = uniqid() . '_' . $request->image_url->getClientOriginalName();
-            $request->image_url->move(public_path('images'), $imageName);
-        }
-        // $slug = implode('-', explode(' ', $request->name));
-        $slug = Str::slug(($request->name));
-
-
-        return DB::table('product')->insert([
-            'name' => $request->name,
-            'price' => $request->price,
-            'discount_price' => $request->discount_price,
-            'description' => $request->description,
-            'status' => $request->status,
-            'image_url' => $imageName,
-            'slug' => $slug
-        ]);
+        return $this->belongsTo(ProductCategory::class, 'product_category_id');
     }
-    public function showAll($id){
+    
+    // public function getAll(){
+    //     return DB::table('product')->get();
+    // }
+    // public function addProduct($request)
+    // {
+    //     $imageName = null;
+    //     if($request->image_url){ //uniqid khi tải ảnh mới trùng tên ảnh cũ , ảnh ms sẽ đè lên và xóa ảnh cũ 
+    //         $imageName = uniqid() . '_' . $request->image_url->getClientOriginalName();
+    //         $request->image_url->move(public_path('images'), $imageName);
+    //     }
+    //     // $slug = implode('-', explode(' ', $request->name));
+    //     $slug = Str::slug(($request->name));
 
-        return DB::table('product')
-                ->where('id',$id )
-                ->get();
-    }
 
-    public function updateProduct($request,$id)
-    {
+    //     return DB::table('product')->insert([
+    //         'name' => $request->name,
+    //         'price' => $request->price,
+    //         'discount_price' => $request->discount_price,
+    //         'description' => $request->description,
+    //         'status' => $request->status,
+    //         'image_url' => $imageName,
+    //         'slug' => $slug
+    //     ]);
+    // }
+    // public function showAll($id){
+
+    //     return DB::table('product')
+    //             ->where('id',$id )
+    //             ->get();
+    // }
+
+    // public function updateProduct($request,$id)
+    // {
         
-        // return DB::table('product')
-        //     ->where('id',$id )
-        //     ->update($data);
-        $product = DB::table('product')->where('id',$id )->first();
+    //     // return DB::table('product')
+    //     //     ->where('id',$id )
+    //     //     ->update($data);
+    //     $product = DB::table('product')->where('id',$id )->first();
         
-        if($product)
-        {
-            $oldImage = $product->image_url;
+    //     if($product)
+    //     {
+    //         $oldImage = $product->image_url;
 
-            $imageName = null;
-            if($request->image_url){// uniqid tấm hình trùng tên sẽ bị đè lên
-                $imageName = uniqid() . '_' . $request->image_url->getClientOriginalName();
-                $request->image_url->move(public_path('images'), $imageName);
+    //         $imageName = null;
+    //         if($request->image_url){// uniqid tấm hình trùng tên sẽ bị đè lên
+    //             $imageName = uniqid() . '_' . $request->image_url->getClientOriginalName();
+    //             $request->image_url->move(public_path('images'), $imageName);
 
-                unlink("images/" . $oldImage);
-            }
-            if(!is_null($imageName)){
-                $check  = DB::table('product')
-                    ->where('id',$id )
-                    ->update(['image_url' => $imageName]);
+    //             unlink("images/" . $oldImage);
+    //         }
+    //         if(!is_null($imageName)){
+    //             $check  = DB::table('product')
+    //                 ->where('id',$id )
+    //                 ->update(['image_url' => $imageName]);
 
-                // $message = $check ? 'Thanh cong' : "that bai";
-                // return redirect()->route('admin.product.productlist')->with('message',$message);
+    //             // $message = $check ? 'Thanh cong' : "that bai";
+    //             // return redirect()->route('admin.product.productlist')->with('message',$message);
 
-            }
-        }
-        return '404';
-    }
+    //         }
+    //     }
+    //     return '404';
+    // }
 
 
-    public function Deletes($id){
-        // return DB::delete('DELETE from product where id = ?' ,[$id]);
-        return DB::table('product')->where('id' ,$id)->delete();
+    // public function Deletes($id){
+    //     // return DB::delete('DELETE from product where id = ?' ,[$id]);
+    //     return DB::table('product')->where('id' ,$id)->delete();
 
-    }
+    // }
 }

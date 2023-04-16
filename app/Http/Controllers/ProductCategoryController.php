@@ -15,7 +15,15 @@ class ProductCategoryController extends Controller
     // {
     //     $this->modelproduct = $productModel;
     // }
+    public function index()
+    {
+        // ------------------------dung ELOQUENT------------------------
+        // $productCategories=  ProductCategory::all();
+        $productCategories = ProductCategory::orderByDesc('id')->get();
 
+        return view('admin.pages.productCategory.listPdCt', compact('productCategories'));
+        
+    }
 
     public function store(Request $request)
     {
@@ -29,20 +37,13 @@ class ProductCategoryController extends Controller
         // $productCategory->name = $request->name;
         // $productCategory->save();
         // $productCategory = ProductCategory::where(['name', 'like', '%d%'])->get();
-        $productCategory = ProductCategory::orderBy('id')->get();
+        // $productCategory = ProductCategory::orderBy('id')->get();
 
 
 
         return redirect()->route('product-category.index');
     }
-    public function index()
-    {
-        // ------------------------dung ELOQUENT------------------------
-        $productCategory=  ProductCategory::all();
 
-        return view('admin.pages.productCategory.listPdCt', compact('productCategory'));
-        
-    }
 
     public function create()
     {
@@ -58,21 +59,31 @@ class ProductCategoryController extends Controller
 
     public function edit(string $id)
     {
-        $productCategory= DB::table('product_category')
-        ->where('id',$id )
-        ->get();
-        return view('admin.pages.productCategory.detailPdCt')->with('productCategory',$productCategory[0]);
+        // $productCategory= DB::table('product_category')
+        // ->where('id',$id )
+        // ->get();
+        $productCategory = ProductCategory::find($id);
+        return view('admin.pages.productCategory.detailPdCt',compact('productCategory'));
     }
 
     public function update(Request $request, string $id)
     {
-        //eloquent
+        $request->validate(["name"=>"required|max:255"]);
+
+        $productCategory = ProductCategory::find($id);
+        $productCategory->update(['name' => $request->name]);
+
+        // return $this->index();
+        return redirect()->route('product-category.index')->with('message', 'Update Successfully!');
+
     }
 
     public function destroy(string $id)
     {
         $productCategory = ProductCategory::find($id);
-        $productCategory->delete();
+        // $productCategory->delete();
+        $productCategory->forceDelete();
+
         return redirect()->route('product-category.index');
     }
 }

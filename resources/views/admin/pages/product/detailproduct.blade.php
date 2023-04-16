@@ -15,7 +15,7 @@
           </div><!-- /.col -->
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
-              <li class="breadcrumb-item"><a href="{{ route('admin.index')}}">Home</a></li>
+              <li class="breadcrumb-item">Home</a></li>
               <li class="breadcrumb-item active">Dashboard v3</li>
             </ol>
           </div><!-- /.col -->
@@ -40,11 +40,70 @@
                 </div>
                 <!-- /.card-header -->
                 <!-- form start -->
+                <form role="form" method="post"
+                action="{{ route('admin.product.edit', ['id' => $product->id]) }}"
+                enctype="multipart/form-data">
+                @csrf
+                <div class="card-body">
+                    <div class="form-group">
+                        <label for="name">Name</label>
+                        <input type="text" class="form-control" name="name" id="name"
+                            placeholder="Name" value="{{ $product->name }}">
+                        @error('name')
+                            <span class="text-danger">{{ $message }}</span>
+                        @enderror
+                    </div>
+                    <div class="form-group">
+                        <label for="price">Price</label>
+                        <input type="number" class="form-control" name="price" id="price"
+                            placeholder="99" value="{{ $product->price }}">
+                    </div>
+                    <div class="form-group">
+                        <label for="discount_price">Discount Price</label>
+                        <input type="number" class="form-control" name="discount_price" id="discount_price"
+                            placeholder="">
+                    </div>
+                    <div class="form-group">
+                        <label for="description">Description</label>
+                        <textarea class="form-control" name="description" id="description">
+                            {{ $product->description }}
+                        </textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="status">Status</label>
+                        <select name="status" class="form-select form-control" id="status">
+                            <option value="">---Please Select---</option>
+                            <option value="1">Show</option>
+                            <option value="0">Hide</option>
+                        </select>
+                        @error('status')
+                            <span class="text-danger">{{ $message }}</span>
+                        @enderror
+                    </div>
 
+                    <div class="form-group">
+                      <label for="image_url">Product image</label>
+                      <input type="file" class="form-control" 
+                      id="image_url" name="image_url" placeholder="Product image" value="{{$product->image_url}}">
+                    </div>
+                    @if ($product->image_url !== null)
+                          <img style="width: 150px; height:150px;" src="{{asset('images'). '/'.$product->image_url}}" alt="">
+                        @else
+                          <img style="width: 150px; height:150px; background:#ffff;">
+              
+         
+                  </div>
+                </div>
+                <!-- /.card-body -->
 
-                <form role="form" method="POST" action="{{route('admin.product.update',[$product->id])}}" enctype="multipart/form-data">
+                <div class="card-footer">
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </div>
+            </form>
+
+                {{-- <form role="form" method="POST" action="{{route('admin.product.edit',['id' => $product->id])}}" enctype="multipart/form-data">
                     @csrf
-                    {{-- <input type="hidden" name="_token" value="{{ csrf_token()}}" > --}}
+                
                     <div class="card-body">
                       <div class="form-group">
                         <label for="name">Product name</label>
@@ -110,21 +169,16 @@
                             <img style="width: 150px; height:150px;" src="{{asset('images'). '/'.$product->image_url}}" alt="">
                           @else
                             <img style="width: 150px; height:150px; background:#ffff;">
-                          @endif
-                      @error('image_url')
-                      <span class="text-danger">
-                        {{$message}}
-                    </span>
-                    @enderror
-                    {{-- <input type="hidden" value="{{$product->id}}" name="id"> --}}
+                
+           
                     </div>
-                    <!-- /.card-body -->
+            
     
                     <div class="card-footer">
                       <button type="submit" class="btn btn-primary">Update</button>
                     </div>
                   </form>
-              </div>
+              </div> --}}
               <!-- /.card -->
 
   
@@ -139,4 +193,13 @@
   </div>
 
 
+@endsection
+@section('js-custom')
+    <script>
+        ClassicEditor
+            .create(document.querySelector('#description'))
+            .catch(error => {
+                console.error(error);
+            });
+    </script>
 @endsection

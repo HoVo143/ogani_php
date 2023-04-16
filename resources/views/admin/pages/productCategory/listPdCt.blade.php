@@ -29,28 +29,61 @@
         <div class="row">
           <div class="col-12">
             <div class="card">
-              <div class="card-header d-flex justify-content-between">
-                <h3 class="card-title">DataTable with minimal features & hover style</h3>
-                <a href="{{ route('admin.product')}}">
-                    <h3 class="card-title {{ Request::route()->getName() === 'admin.product' ? 'active': '' }}">Create</h3>
-                  </a>
+              <div class="card-header">
+                <div class="row">
+                    <div class="col-md-8">
+                        <h3 class="card-title">DataTable with default features</h3>
+                    </div>
+                    <div class="col-md-4">
+                        <a href="{{ route('product-category.create') }}"
+                            class="btn btn-primary float-right">Create</a>
+                    </div>
+                </div>
+            </div>
               </div>
               <!-- /.card-header -->
               <div class="card-body">
                 <table id="example2" class="table table-bordered table-hover">
                   <thead>
                   <tr>
+                    {{-- <th>id</th> --}}
                     <th>Product name</th>
-   
+                    {{-- <th>deleted at</th>
                     <th>Created at</th>
-                    <th>Action</th>
+                    <th>updated at</th> --}}
+                    <th>Option</th>
 
                   </tr>
                   </thead>
                   <tbody>
-                    @forelse ( $productCategory as $productCategorys)
+                    @forelse ($productCategories as $productCategory)
+                    <tr>
+                        <td>{{ $productCategory->name }}</td>
+                        <td>
+                            <form method="post"
+                                action="{{ route('product-category.destroy', ['product_category' => $productCategory->id]) }}">
+                                @csrf
+                                <a class="btn btn-primary"
+                                    href="{{ route('product-category.edit', ['product_category' => $productCategory->id]) }}">Detail</a>
+                                @method('DELETE')
+                                <button onclick="return confirm('Are you sure ?')" type="submit"
+                                    class="btn btn-danger">Delete</button>
+                            </form>
+                        </td>
+                    </tr>
+
+                  @empty
                       <tr>
+                          <td colspan="1">No Product Category</td>
+                      </tr>
+                  @endforelse
+                  </tbody>
+                  {{-- <tbody>
+                    @forelse ( $productCategory as $key=>$productCategorys)
+                      <tr>
+                        <td>{{$key+1}}</td>
                         <td>{{$productCategorys->name}}</td>
+                        <td>{{date('d/m/Y H:i:s', strtotime($productCategorys->update_at))}}</td>
                         <td>{{ Carbon\Carbon::parse($productCategorys->created_at)->format('d/m/Y H:i:s')}}</td>
 
                         <td>
@@ -72,7 +105,7 @@
                       </tr>
                   @endforelse
                   </tbody>
-  
+   --}}
                 </table>
               </div>
               <!-- /.card-body -->

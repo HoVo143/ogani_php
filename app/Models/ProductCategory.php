@@ -13,8 +13,14 @@ class ProductCategory extends Model
 
     protected $fillable = ['name'];
 
-    
     protected $table = 'product_category';
+
+    public $timestamps = true;
+
+    public function products()
+    {
+        return $this->hasMany(Product::class, 'product_category_id');
+    }
     // $table->forceDelete();
     // public function getAll(){
     //     return DB::table('product_category')->get();

@@ -36,13 +36,13 @@
                 </a>
               </li>
               <li class="nav-item">
-                <a href="{{ route('admin.product')}}" class="nav-link {{ Request::route()->getName() === 'admin.product' ? 'active': '' }}">
+                <a href="{{ route('admin.product.productlist')}}" class="nav-link {{ Request::route()->getName() === 'admin.product.productlist' ? 'active': '' }}">
                   <i class="far fa-circle nav-icon  "></i>
                   <p>Products</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="{{ route('product-category.create')}}" class="nav-link  {{ Request::route()->getName() === 'product-category.create' ? 'active': '' }}">
+                <a href="{{ route('product-category.index')}}" class="nav-link  {{ Request::route()->getName() === 'product-category.index' ? 'active': '' }}">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Product category</p>
                 </a>

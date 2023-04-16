@@ -106,7 +106,7 @@
                     </div>
                     {{-- admin --}}
                     <div class="form-group">
-                      <label for="is_admin">admin</label>
+                      <label for="is_admin">Role</label>
                       <select name="is_admin" id="is_admin" class="form-control">
                         <option value=""> -----pelease---- </option>
                         <option value="1">admin</option>

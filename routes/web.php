@@ -59,13 +59,13 @@ Route::prefix('admin')->middleware('auth.admin')->group(function (){ // thêm /a
     
     //product
     Route::get('/product/productlist', [ProductController::class , 'index'])->name('admin.product.productlist');
-
-    Route::get('/product/productlist/{id}', [ProductController::class , 'show'])->name('admin.product.detail');
-    Route::get('/product/delete/{id}', [ProductController::class , 'destroy'])->name('admin.product.delete');
-    
-    Route::post('/product/update/{id}', [ProductController::class , 'update'])->name('admin.product.update');
-
     Route::post('/product/save', [ProductController::class, 'store'])->name('admin.product.save');
+    Route::get('/product/detail/{id}', [ProductController::class, 'edit'])->name('admin.product.detail');
+    Route::post('/product/edit/{id}', [ProductController::class, 'update'])->name('admin.product.edit');
+    Route::get('/product/create', [ProductController::class, 'create'])->name('admin.product.create');
+    // Route::get('/product/productlist/{id}', [ProductController::class , 'show'])->name('admin.product.detail');
+    // Route::get('/product/delete/{id}', [ProductController::class , 'destroy'])->name('admin.product.delete');
+    // Route::post('/product/update/{id}', [ProductController::class , 'update'])->name('admin.product.update');
     
     //user
     Route::get('/user/userlist', [UserController::class , 'index'])->name('admin.user.userlist');
@@ -79,6 +79,8 @@ Route::prefix('admin')->middleware('auth.admin')->group(function (){ // thêm /a
     
     // Route::get('/product_category', [ProductCategoryController::class, 'create'])->name('admin.product_category');
     Route::resource('product-category', ProductCategoryController::class);
+    Route::get('product-category/create', [ProductCategoryController::class, 'create'])->name('product-category.create');
+
     // Route::resource('product-category-list', ProductCategoryController::class);
 
 
@@ -89,5 +91,6 @@ Route::prefix('admin')->middleware('auth.admin')->group(function (){ // thêm /a
 Auth::routes();
 
 Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::post('/product-get-slug', [ProductController::class, 'getSlug'])->name('product.get.slug');
 
 
