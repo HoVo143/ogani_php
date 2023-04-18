@@ -64,7 +64,7 @@ Route::prefix('admin')->middleware('auth.admin')->group(function (){ // thêm /a
     Route::post('/product/edit/{id}', [ProductController::class, 'update'])->name('admin.product.edit');
     Route::get('/product/create', [ProductController::class, 'create'])->name('admin.product.create');
     // Route::get('/product/productlist/{id}', [ProductController::class , 'show'])->name('admin.product.detail');
-    // Route::get('/product/delete/{id}', [ProductController::class , 'destroy'])->name('admin.product.delete');
+    Route::get('/product/delete/{id}', [ProductController::class , 'destroy'])->name('admin.product.delete');
     // Route::post('/product/update/{id}', [ProductController::class , 'update'])->name('admin.product.update');
     
     //user
@@ -72,11 +72,9 @@ Route::prefix('admin')->middleware('auth.admin')->group(function (){ // thêm /a
     Route::get('/user/userlist/{id}', [UserController::class , 'show'])->name('admin.user.detail');
     Route::get('/user/delete/{id}', [UserController::class , 'destroy'])->name('admin.user.delete');
     Route::post('/user/update', [UserController::class , 'update'])->name('admin.user.update');
-    // 
     Route::post('/user/save', [UserController::class, 'store'])->name('admin.user.save');
    
     //product_category
-    
     // Route::get('/product_category', [ProductCategoryController::class, 'create'])->name('admin.product_category');
     Route::resource('product-category', ProductCategoryController::class);
     Route::get('product-category/create', [ProductCategoryController::class, 'create'])->name('product-category.create');

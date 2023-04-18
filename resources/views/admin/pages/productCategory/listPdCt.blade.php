@@ -59,6 +59,7 @@
                     @forelse ($productCategories as $productCategory)
                     <tr>
                         <td>{{ $productCategory->name }}</td>
+                        
                         <td>
                             <form method="post"
                                 action="{{ route('product-category.destroy', ['product_category' => $productCategory->id]) }}">

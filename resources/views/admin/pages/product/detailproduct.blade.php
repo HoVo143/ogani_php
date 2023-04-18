@@ -1,7 +1,9 @@
 @extends('admin.layout.admin')
+
 @section('title')
   product
 @endsection
+
 @section('admin')
 
   <!-- Content Wrapper. Contains page content -->
@@ -54,6 +56,14 @@
                         @enderror
                     </div>
                     <div class="form-group">
+                      <label for="slug">Slug</label>
+                      <input type="text" class="form-control" name="slug" id="slug"
+                          placeholder="Slug">
+                      @error('slug')
+                          <span class="text-danger">{{ $message }}</span>
+                      @enderror
+                  </div>
+                    <div class="form-group">
                         <label for="price">Price</label>
                         <input type="number" class="form-control" name="price" id="price"
                             placeholder="99" value="{{ $product->price }}">
@@ -77,21 +87,22 @@
                             <option value="0">Hide</option>
                         </select>
                         @error('status')
-                            <span class="text-danger">{{ $message }}</span>
+                            <span class="text-danger">{{ $message }}</span>~
                         @enderror
                     </div>
-
+                  
                     <div class="form-group">
                       <label for="image_url">Product image</label>
                       <input type="file" class="form-control" 
                       id="image_url" name="image_url" placeholder="Product image" value="{{$product->image_url}}">
                     </div>
+                    {{--  --}}
                     @if ($product->image_url !== null)
                           <img style="width: 150px; height:150px;" src="{{asset('images'). '/'.$product->image_url}}" alt="">
                         @else
                           <img style="width: 150px; height:150px; background:#ffff;">
-              
-         
+                    @endif
+                    {{--  --}}
                   </div>
                 </div>
                 <!-- /.card-body -->
@@ -194,7 +205,29 @@
 
 
 @endsection
+
 @section('js-custom')
+  <script type="text/javascript">
+    $(document).ready(function() {
+        $('#name').on('keyup', function() { // lấy id của ô input có tên là "name"
+            let name = $(this).val(); // lấy value của ô input trên
+            $.ajax({ // ajax 
+                method: 'POST', //method of form
+                url: "{{ route('product.get.slug') }}", // action of form
+                data: {
+                    name: name,
+                    _token: "{{ csrf_token() }}" // gửi kèm csrf_token() thì mới chạy được
+                },
+                success: function(res) {
+                    $('#slug').val(res.slug);// thành công thì show ra ô input có id = "slug"
+                },
+                error: function(res) {
+
+                }
+            });
+        });
+    });
+  </script>
     <script>
         ClassicEditor
             .create(document.querySelector('#description'))

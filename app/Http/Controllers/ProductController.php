@@ -20,10 +20,27 @@ class ProductController extends Controller
     }
     // ---------------------------------------------------------------
 
-    public function index()
+    public function index(Request $request)
     {
+
+        // $keyword = $request->keyword; //search
+        // $status = $request->status;
+        // $products= Product::where('name', 'like', "%$keyword%")->where('status', $status)->orderBy('id', 'desc')->paginate(4);
+
         // $products = DB::table('product')->get();
-        $products = Product::all();
+        // $products = Product::all();
+
+        // $products = Product::orderBy('id', 'desc')->paginate(3); // phan trang //dùng orderby để những product mới nhất đc đem lên đầu
+
+        $filter = [];
+        
+        if(!empty($request->keyword)){
+            $filter[] = ['name', 'like', '%' . $request->keyword . '%'];
+        }
+        if($request->status !== '' && !is_null($request->status)){
+            $filter[] = ['status', $request->status ];
+        }
+        $products = Product::where($filter)->orderBy('id', 'desc')->paginate(3);
         return view('admin.pages.product.productlist', ['products' => $products]);
     }
 
@@ -135,7 +152,9 @@ class ProductController extends Controller
      */
     public function destroy($id)
     {
-        //
+             DB::table('product')->where('id' ,$id)->delete();
+            // flash data in laravel
+            return redirect()->route('admin.product.productlist'); // key la message
     }
 
     public function getSlug(Request $request)
@@ -145,7 +164,11 @@ class ProductController extends Controller
         return response()->json(['slug' => $slug]);
     }
 
-
+    // public function search(Request $request){
+    //     $keyword = $request->keyword;
+    //     $products= Product::where('name', 'like', "%$keyword%")->orderBy('id', 'desc')->paginate(5);
+    //     return view('admin.pages.product.productlist')->with('products', $products);
+    // }
     
     // public function store(ProductSaveRequest $request)
     // {
