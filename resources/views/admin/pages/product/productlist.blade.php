@@ -47,14 +47,14 @@
                           <option value="0">hide</option>
                         </select>
                       </div>
-                      <div class="form-group col-md-4 d-flex align-items-center">
+                      {{-- <div class="form-group col-md-4 d-flex align-items-center">
                         <label for="status">asc/desc</label>
                         <select name="status" id="status" class="form-control m-1" > 
                           <option value=""> --Choose-- </option>
                           <option value="1">asc</option>
                           <option value="0">desc</option>
                         </select>
-                      </div>
+                      </div> --}}
                       <div class="form-group col-md-4 d-flex align-items-center">
                         <button class="btn btn-outline-success" type="submit">Search</button>
                       </div>
@@ -68,8 +68,21 @@
                 <table id="example2" class="table table-bordered table-hover">
                   <thead>
                   <tr>
-                    <th>id</th>
-                    <th>Product name</th>
+                    <th>
+                      <a href="{{ request()->fullUrlWithQuery([
+                          'keyword' => request()->keyword ?? '',
+                          'sort-by' => 'id',
+                          'sort-type' => $sortType])}}">id</a>
+                    </th>
+                    <th>
+                      <a href="{{ request()->fullUrlWithQuery([
+                          'keyword' => request()->keyword ?? '',
+                          'sort-by' => 'name',
+                          'sort-type' => $sortType])}}">name</a>
+                    </th>
+                    {{-- <th><a href="?sort-by=id&sort-type={{ $sortType }}">id</a></th> --}}
+                    {{-- <th><a href="?sort-by=name&sort-type={{ $sortType }}">name</a></th> --}}
+
                     {{-- <th>discount price</th>
                     <th>Product price</th>
                     <th>Description</th>

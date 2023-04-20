@@ -40,8 +40,22 @@ class ProductController extends Controller
         if($request->status !== '' && !is_null($request->status)){
             $filter[] = ['status', $request->status ];
         }
-        $products = Product::where($filter)->orderBy('id', 'desc')->paginate(3);
-        return view('admin.pages.product.productlist', ['products' => $products]);
+
+        // click thu tu
+        $sortBy = $request->input('sort-by') ?? 'id';
+        $sortType = $request->input('sort-type');
+
+        $sort = ['desc', 'asc'];
+        if(!empty($sortType) && in_array($sortType, $sort)){
+            $sortType = $sortType === 'desc' ? 'asc' : 'desc';
+
+        }else{
+            $sortType = 'desc';
+        }
+
+
+        $products = Product::where($filter)->orderBy($sortBy, $sortType)->paginate(3);
+        return view('admin.pages.product.productlist', compact('products', 'sortBy', 'sortType'));
     }
 
     /**

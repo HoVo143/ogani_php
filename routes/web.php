@@ -8,6 +8,7 @@ use App\Http\Controllers\ProductCategoryController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ShopController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\TextSendMailController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 // client
@@ -92,3 +93,6 @@ Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('ho
 Route::post('/product-get-slug', [ProductController::class, 'getSlug'])->name('product.get.slug');
 
 
+//test mail
+
+Route::get('/test-send-mail', [TextSendMailController::class, 'sendMail']);
