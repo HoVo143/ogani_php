@@ -18,6 +18,6 @@ class ArticleCategory extends Model
     ];
 
     public function article_category(){
-        return $this->belongsTo(Article::class, 'article_category');
+        return $this->hasMany(Article::class, 'article_category_id');
     }
 }

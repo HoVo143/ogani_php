@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\ArticleCategoryController;
+use App\Http\Controllers\ArticleController;
 use App\Http\Controllers\BlogController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\HomeController;
@@ -83,6 +85,18 @@ Route::prefix('admin')->middleware('auth.admin')->group(function (){ // thêm /a
     // Route::resource('product-category-list', ProductCategoryController::class);
 
 
+    //article
+    Route::get('/article/articlelist', [ArticleController::class , 'index'])->name('admin.article.list');
+    Route::post('/article/save', [ArticleController::class, 'store'])->name('admin.article.save');
+    Route::get('/article/detail/{id}', [ArticleController::class, 'edit'])->name('admin.article.detail');
+    Route::post('/article/edit/{id}', [ArticleController::class, 'update'])->name('admin.article.edit');
+    Route::get('/article/create', [ArticleController::class, 'create'])->name('admin.article.create');
+    Route::get('/article/delete/{id}', [ArticleController::class , 'destroy'])->name('admin.article.delete');
+    //article category
+    Route::resource('article-category', ArticleCategoryController::class);
+    Route::get('article-category/create', [ArticleCategoryController::class, 'create'])->name('article-category.create');
+
+
 });
 
 
@@ -91,6 +105,7 @@ Auth::routes();
 
 Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::post('/product-get-slug', [ProductController::class, 'getSlug'])->name('product.get.slug');
+Route::post('/article-get-slug', [ArticleController::class, 'getSlug'])->name('article.get.slug');
 
 
 //test mail

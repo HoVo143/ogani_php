@@ -48,6 +48,18 @@
                 </a>
               </li>
               <li class="nav-item">
+                <a href="{{ route('admin.article.create')}}" class="nav-link {{ Request::route()->getName() === 'admin.article.create' ? 'active': '' }}">
+                  <i class="far fa-circle nav-icon  "></i>
+                  <p>Article</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="{{ route('article-category.create')}}" class="nav-link  {{ Request::route()->getName() === 'article-category.create' ? 'active': '' }}">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Article category</p>
+                </a>
+              </li>
+              <li class="nav-item">
                 <a href="" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Blog</p>
