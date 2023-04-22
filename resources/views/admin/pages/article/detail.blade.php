@@ -49,25 +49,26 @@
                 {{-- <input type="hidden" name="_token" value="{{ csrf_token()}}" > --}}
                 <div class="card-body">
                   <div class="form-group">
+                    <label for="title">title</label>
+                    <input type="text" class="form-control" id="title" name="title" value="{{$article->title}}" >
+                   @error('title')
+                      <span class="text-danger">
+                        {{$message}}
+                    </span>
+                    @enderror
+                  </div>
+                  <div class="form-group">
                     <label for="slug">Slug</label>
                     <input type="text" class="form-control" name="slug" id="slug"
-                        placeholder="Slug">
+                        placeholder="Slug" value="{{$article->slug}}">
                     @error('slug')
                         <span class="text-danger">{{ $message }}</span>
                     @enderror
                 </div>
-                <div class="form-group">
-                  <label for="title">title</label>
-                  <input type="text" class="form-control" id="title" name="title" >
-                 @error('title')
-                    <span class="text-danger">
-                      {{$message}}
-                  </span>
-                  @enderror
-                </div>
+                
                   <div class="form-group">
                     <label for="author">author</label>
-                    <input type="text" class="form-control" id="author" name="author">
+                    <input type="text" class="form-control" id="author" name="author" value="{{$article->author}}">
                    @error('author')
                       <span class="text-danger">
                         {{$message}}
@@ -78,8 +79,9 @@
 
                   <div class="form-group">
                     <label for="description">Description</label>
-                    <textarea name="description" id="description" class="form-control " cols="30" rows="3"></textarea>
-
+                    <textarea name="description" id="description" class="form-control " cols="30" rows="3" ></textarea>
+                    <input type="text" class="form-control"  name="tags" id="tags" value="{!!$article->description!!}">
+               
                    @error('description')
                       <span class="text-danger">
                         {{$message}}
@@ -89,7 +91,7 @@
 
                   <div class="form-group">
                     <label for="tags">tags</label>
-                    <textarea name="tags" id="tags" class="form-control " cols="30" rows="3"></textarea>
+                    <input type="text" class="form-control"  name="tags" id="tags" value="{{$article->tags}}">
 
                    @error('tags')
                       <span class="text-danger">
@@ -102,8 +104,8 @@
                     <label for="is_show">is_show</label>
                     <select name="is_show" id="is_show" class="form-control">
                       <option value=""> -----pelease---- </option>
-                      <option value="1">show</option>
-                      <option value="0">hide</option>
+                      <option  {{ $article->is_show ? 'selected' : ''}} value="1">show</option>
+                      <option {{ $article->is_show ? 'selected' : ''}} value="0">hide</option>
                     </select>
                     @error('is_show')
                       <span class="text-danger">
@@ -115,8 +117,8 @@
                     <label for="is_approved">is_approved</label>
                     <select name="is_approved" id="is_approved" class="form-control">
                       <option value=""> -----pelease---- </option>
-                      <option value="1">show</option>
-                      <option value="0">hide</option>
+                      <option {{ $article->is_approved ? 'selected' : ''}} value="1">show</option>
+                      <option {{ $article->is_approved ? 'selected' : ''}} value="0">hide</option>
                     </select>
                     @error('is_approved')
                       <span class="text-danger">
@@ -124,7 +126,7 @@
                     </span>
                     @enderror
                   </div>
-                  {{--  --}}
+{{--                   
                   <div class="form-group">
                     <label for="article_category_id">Article Category</label>
                     <select name="article_category_id" class="form-select form-control"
@@ -138,7 +140,7 @@
                     @error('article_category_id')
                         <span class="text-danger">{{ $message }}</span>
                     @enderror
-                </div>
+                </div> --}}
 
                 <div class="card-footer">
                     <button type="submit" class="btn btn-primary">Submit</button>

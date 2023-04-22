@@ -74,9 +74,14 @@
                           'sort-by' => 'id',
                           'sort-type' => $sortType])}}">id</a>
                     </th>
-
+                    <th>
+                      <a href="{{ request()->fullUrlWithQuery([
+                          'keyword' => request()->keyword ?? '',
+                          'sort-by' => 'title',
+                          'sort-type' => $sortType])}}">title</a>
+                    </th>
   
-                    <th>title</th>
+                    {{-- <th>title</th> --}}
                     <th>author</th>
                     <th>Description</th>
                     <th>is_show</th>

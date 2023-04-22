@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\DB;
 use Cviebrock\EloquentSluggable\Sluggable;
-
+use OpenAI\Laravel\Facades\OpenAI;
 use Cviebrock\EloquentSluggable\Services\SlugService;
 
 
@@ -135,6 +135,30 @@ class ArticleController extends Controller
             return redirect()->route('admin.article.list'); // key la message
     }
 
+    public function generate(Request $request){
+        if(is_null($request->title)){
+            return;
+        }
+        $title = $request->title;
+
+        $client = \OpenAI::client(config('app.openai_api_key'));
+        // $client = OpenAI::client(env('OPEN_AI_KEY'));
+
+        $result = $client->completions()->create([
+            "model" => "text-davinci-003",
+            "temperature" => 0.7,
+            "top_p" => 1,
+            "frequency_penalty" => 0,
+            "presence_penalty" => 0,
+            "max_tokens" => 600,
+            "prompt" => sprintf("write article about: %s", $title),
+        ]);
+
+        $content = trim($result['choires'][0]['text']);
+
+        return response()->json(['content' => $content]);
+
+    }
     public function getSlug(Request $request)
     {
         // $slug = implode('-', explode(' ', $request->name));
