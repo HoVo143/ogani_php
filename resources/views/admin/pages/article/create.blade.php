@@ -47,7 +47,8 @@
                     <div class="form-group">
                       <label for="title">title</label>
                       <input type="text" class="form-control" id="title" name="title" >
-                      <input type="submit" value="click" name="chatgpt" id="chatgpt" >
+                      <button type="button" id="generate">Nhúng chat GPT</button>
+
                      @error('title')
                         <span class="text-danger">
                           {{$message}}
@@ -76,7 +77,7 @@
 
                     <div class="form-group">
                       <label for="description">Description</label>
-                      <textarea name="description" id="description" class="form-control " cols="30" rows="3"></textarea>
+                      <textarea style="color: black;" name="description" id="description" class="form-control " cols="30" rows="3"></textarea>
 
                      @error('description')
                         <span class="text-danger">
@@ -164,6 +165,17 @@
 @endsection
 
 @section('js-custom')
+  <script>
+    let myEditor;
+    ClassicEditor
+        .create(document.querySelector('#description'))
+        .then(editor => {
+            myEditor = editor;
+        })
+        .catch(error => {
+            console.error(error);
+        });
+  </script>
     <script type="text/javascript">
         $(document).ready(function() {
             $('#title').on('keyup', function() { // lấy id của ô input có tên là "title"
@@ -172,11 +184,32 @@
                     method: 'POST', //method of form
                     url: "{{ route('article.get.slug') }}", // action of form
                     data: {
-                        title: title,
-                        _token: "{{ csrf_token() }}" // gửi kèm csrf_token() thì mới chạy được
+                        "title": title,
+                        "_token": "{{ csrf_token() }}" // gửi kèm csrf_token() thì mới chạy được
                     },
                     success: function(res) {
-                        $('#slug').val(res.slug);// thành công thì show ra ô input có id = "slug"
+                        $('#slug').val(res.title);// thành công thì show ra ô input có id = "slug"
+                    },
+                    error: function(res) {
+
+                    }
+                });
+            });
+            $('#generate').on('click', function() {
+                let name = $('#title').val();
+
+                $.ajax({
+                    method: 'POST', //method of form
+                    url: "{{ route('write-generate') }}", // action of form
+                    data: {
+                        "title": name,
+                        "_token": "{{ csrf_token() }}"
+                    },
+                    success: function(res) {
+                        // $('#description').val(res.content);
+                        // var editor = CKEDITOR.instances['description'];
+                        // editor.setData(res.content);
+                        myEditor.setData(res.content);
                     },
                     error: function(res) {
 
@@ -184,13 +217,7 @@
                 });
             });
         });
-    </script>
-    <script>
-        ClassicEditor
-            .create(document.querySelector('#description'))
-            .catch(error => {
-                console.error(error);
-            });
+        
     </script>
 @endsection
 

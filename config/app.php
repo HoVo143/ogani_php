@@ -124,7 +124,7 @@ return [
     'key' => env('APP_KEY'),
 
     'cipher' => 'AES-256-CBC',
-    'openai_api_key' => env('OPEN_AI_KEY'),
+    'openai_api_key' => env('OPENAI_API_KEY'),
     /*
     |--------------------------------------------------------------------------
     | Maintenance Mode Driver

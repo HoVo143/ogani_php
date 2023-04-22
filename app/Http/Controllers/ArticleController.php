@@ -136,13 +136,15 @@ class ArticleController extends Controller
     }
 
     public function generate(Request $request){
-        if(is_null($request->title)){
+
+        if (is_null($request->title)) {
             return;
         }
+
         $title = $request->title;
 
         $client = \OpenAI::client(config('app.openai_api_key'));
-        // $client = OpenAI::client(env('OPEN_AI_KEY'));
+        // $client = OpenAI::client(env('OPENAI_API_KEY'));
 
         $result = $client->completions()->create([
             "model" => "text-davinci-003",
@@ -150,11 +152,11 @@ class ArticleController extends Controller
             "top_p" => 1,
             "frequency_penalty" => 0,
             "presence_penalty" => 0,
-            "max_tokens" => 600,
-            "prompt" => sprintf("write article about: %s", $title),
+            'max_tokens' => 600,
+            'prompt' => sprintf('Write article about: %s', $title),
         ]);
 
-        $content = trim($result['choires'][0]['text']);
+        $content = trim($result['choices'][0]['text']);
 
         return response()->json(['content' => $content]);
 
@@ -164,6 +166,6 @@ class ArticleController extends Controller
         // $slug = implode('-', explode(' ', $request->name));
         // $slug = Str::slug($request->title);
         $slug = SlugService::createslug(Article::class, 'slug', $request->title);
-        return response()->json(['slug' => $slug]);
+        return response()->json(['title' => $slug]);
     }
 }

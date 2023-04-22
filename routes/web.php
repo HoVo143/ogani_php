@@ -106,6 +106,7 @@ Auth::routes();
 Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::post('/product-get-slug', [ProductController::class, 'getSlug'])->name('product.get.slug');
 Route::post('/article-get-slug', [ArticleController::class, 'getSlug'])->name('article.get.slug');
+Route::post('/write/generate', [ArticleController::class, 'generate'])->name('write-generate');
 
 
 //test mail
