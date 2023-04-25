@@ -45,11 +45,11 @@
                   {{-- <input type="hidden" name="_token" value="{{ csrf_token()}}" > --}}
                   <div class="card-body">
                     <div class="form-group">
-                      <label for="title">title</label>
+                      <label for="name">name</label>
                       {{-- dùng is-invalid --}}
-                      <input type="text" class="form-control {{ $errors->first('title') ? 'is-invalid' : ''}}" id="title" name="title" 
-                      value="{{ old('title')}}">  {{-- {{ old('name')}} giữ lại giá trị cũ khi các input khác chưa nhập --}}
-                      @error('title')
+                      <input type="text" class="form-control {{ $errors->first('name') ? 'is-invalid' : ''}}" id="name" name="name" 
+                      value="{{ old('name')}}">  {{-- {{ old('name')}} giữ lại giá trị cũ khi các input khác chưa nhập --}}
+                      @error('name')
                         <span class="text-danger">
                             {{$message}}
                         </span>
@@ -59,8 +59,8 @@
                         <label for="is_show">is_show</label>
                         <select name="is_show" id="is_show" class="form-control">
                           <option value=""> -----pelease---- </option>
-                          <option value="1">1</option>
-                          <option value="0">0</option>
+                          <option value="1">show</option>
+                          <option value="0">hide</option>
                         </select>
                         @error('is_show')
                           <span class="text-danger">

@@ -34,13 +34,13 @@
               <div class="card card-primary ">
                 <div class="card-header d-flex justify-content-between">
                   <h3 class="card-title">Quick Example</h3>
-                  <a href="{{ route('admin.article.list')}}">
+                  <a href="{{ route('article.index')}}">
                     <h3 class="card-title ">Create</h3>
                   </a>
                 </div>
                 <!-- /.card-header -->
                 <!-- form start -->
-                <form role="form" method="POST" action="{{route('admin.article.save')}}" enctype="multipart/form-data">
+                <form role="form" method="POST"action="{{route('article.store')}}" enctype="multipart/form-data">
                   @csrf
                   {{-- <input type="hidden" name="_token" value="{{ csrf_token()}}" > --}}
                   <div class="card-body">
@@ -114,8 +114,8 @@
                       <label for="is_approved">is_approved</label>
                       <select name="is_approved" id="is_approved" class="form-control">
                         <option value=""> -----pelease---- </option>
-                        <option value="1">1</option>
-                        <option value="0">0</option>
+                        <option value="1">show</option>
+                        <option value="0">hide</option>
                       </select>
                       @error('is_approved')
                         <span class="text-danger">
@@ -124,9 +124,9 @@
                       @enderror
                     </div>
                     {{--  --}}
-                    <div class="form-group">
+                    <div class="form-group" style="color: black;" >
                       <label for="article_category_id">Article Category</label>
-                      <select name="article_category_id" class="form-select form-control"
+                      <select style="color: black;" name="article_category_id" class="form-select form-control"
                           id="article_category_id">
                           <option value="">---Please Select---</option>
                           @foreach ($articleCategory as $category)

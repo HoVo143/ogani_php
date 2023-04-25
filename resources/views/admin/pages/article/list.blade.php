@@ -16,7 +16,7 @@
           </div>
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
-              <a href="{{ route('admin.article.create')}}">
+              <a href="{{ route('article.create')}}">
                 <h3 class="card-title ">Create</h3>
               </a>
             </ol>
@@ -34,7 +34,7 @@
               <div class="card-header d-flex justify-content-between">
                 {{-- <h3 class="card-title">DataTable with minimal features & hover style</h3> --}}
                   <div class="card-title">
-                    <form class="d-flex" role="search" method="GET" action="{{route('admin.article.list')}}">
+                    <form class="d-flex" role="search" method="GET" action="{{route('article.index')}}">
                       @csrf
                       <div class="form-group col-md-5 d-flex align-items-center">
                         <input class="form-control me-2" type="text" value="{{request()->keyword ?? ''}}" name="keyword" id="keyword" placeholder="keyword" aria-label="Search">
@@ -103,8 +103,15 @@
                         
                         <td>{{ $article->category->name }}</td>
                         <td>
-                          <a href="{{ route('admin.article.detail', ['id' => $article->id]) }}">Detail</a>
-                          <a onclick="return confirm('xoa ko ?');" href="{{ route('admin.article.delete', ['id' => $article->id])}}" class="btn btn-danger">Delete</a>
+                          <form method="post"
+                          action="{{ route('article.destroy', ['article' => $article->id]) }}">
+                          @csrf
+                          <a class="btn btn-primary"
+                              href="{{ route('article.edit', ['article' => $article->id]) }}">Detail</a>
+                          @method('DELETE')
+                          <button onclick="return confirm('Are you sure ?')" type="submit"
+                              class="btn btn-danger">Delete</button>
+                      </form>
 
                        </td>
                         {{-- <td>

@@ -36,16 +36,17 @@
               <div class="card card-primary ">
                 <div class="card-header d-flex justify-content-between">
                   <h3 class="card-title">Quick Example</h3>
-                  <a href="{{ route('admin.article.list')}}">
+                  <a href="{{ route('article.index')}}">
                     <h3 class="card-title">Create</h3>
                   </a>
                 </div>
                 <!-- /.card-header -->
                 <!-- form start -->
                 <form role="form" method="post"
-                action="{{ route('admin.article.edit', ['id' => $article->id]) }}"
+                action="{{ route('article.update', ['article' => $article->id]) }}"
                 enctype="multipart/form-data">
                 @csrf
+                @method('PUT')
                 {{-- <input type="hidden" name="_token" value="{{ csrf_token()}}" > --}}
                 <div class="card-body">
                   <div class="form-group">

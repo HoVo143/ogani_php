@@ -50,8 +50,7 @@ class ArticleController extends Controller
      */
     public function create()
     {
-        $articleCategory = ArticleCategory::orderBy('id', 'DESC')->get();
-
+        $articleCategory = Article::orderBy('id', 'DESC')->get();
         return view('admin.pages.article.create', compact('articleCategory'));
     }
 
@@ -81,7 +80,9 @@ class ArticleController extends Controller
         if ($bool) {
             $message = 'thanh cong';
         }
-        return redirect()->route('admin.article.list')->with('message', $message);
+        return redirect()->route('article.index')->with('message', $message);
+
+    
     }
 
     /**
@@ -103,9 +104,11 @@ class ArticleController extends Controller
      */
     public function edit($id)
     {
-        $article = DB::table('article')->where('id', $id)->first();
+        // $article = DB::table('article')->where('id', $id)->first();
 
-        return view('admin.pages.article.detail', ['article' => $article]);
+        // return view('admin.pages.article.detail', ['article' => $article]);
+        $article = Article::find($id);
+        return view('admin.pages.article.detail',compact('article'));
     }
 
     /**
@@ -117,9 +120,15 @@ class ArticleController extends Controller
      */
     public function update(Request $request, $id)
     {
-        DB::table('article')->where('id', $id)->first();
-        return redirect()->route('admin.article.list');
+        // DB::table('article')->where('id', $id)->first();
+        // return redirect()->route('admin.article.list');
+        $request->validate(["title"=>"required|max:255"]);
 
+        $article = Article::find($id);
+        $article->update(['title' => $request->title]);
+
+        // return $this->index();
+        return redirect()->route('article.list')->with('message', 'Update Successfully!');
     }
 
     /**
@@ -130,9 +139,11 @@ class ArticleController extends Controller
      */
     public function destroy($id)
     {
-             DB::table('article')->where('id' ,$id)->delete();
-            // flash data in laravel
-            return redirect()->route('admin.article.list'); // key la message
+        $article = Article::find($id);
+        // $article->delete();
+        $article->forceDelete();
+
+        return redirect()->route('article.index');
     }
 
     public function generate(Request $request){

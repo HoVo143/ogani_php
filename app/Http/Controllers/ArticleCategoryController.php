@@ -23,10 +23,16 @@ class ArticleCategoryController extends Controller
     {
 
         // ------------------------dung ELOQUENT------------------------
-        $request->validate(['name' => 'required|max:255']);
-        $articleCategory = ArticleCategory::create(['name' => $request->name]);
+        $request->validate(['name' => 'required|min:3']);
+
+        $article = new ArticleCategory();
+        $article->name = $request->name;
+        $article->is_show = $request->is_show;
+        $article->save();
+        // ArticleCategory::insert(['name' => $request->name ,'created_at' => now(), 'updated_at' =>now()]);
+
         //  or
-        // $productCategory = ProductCategory::insert(['name' => $request->name]);
+        // $productCategory = ProductCategory::create(['name' => $request->name]);
         // $productCategory = new ProductCategory;
         // $productCategory->name = $request->name;
         // $productCategory->save();
@@ -35,7 +41,7 @@ class ArticleCategoryController extends Controller
 
 
 
-        return redirect()->route('product-category.index');
+        return redirect()->route('article-category.index');
     }
 
 
@@ -51,33 +57,51 @@ class ArticleCategoryController extends Controller
 
     }
 
-    public function edit(string $id)
+    // cách edit cũ
+    // public function edit(string $id)
+    // {
+    //     // $productCategory= DB::table('product_category')
+    //     // ->where('id',$id )
+    //     // ->get();
+    //     $articleCategory = ArticleCategory::find($id);
+    //     return view('admin.pages.articleCategory.detail',compact('articleCategory'));
+    // }
+
+    // cách edit ngắn gọn nhất
+    public function edit(ArticleCategory $articleCategory)
     {
-        // $productCategory= DB::table('product_category')
-        // ->where('id',$id )
-        // ->get();
-        $articleCategory = ArticleCategory::find($id);
-        return view('admin.pages.articleCategory.detail',compact('articleCategory'));
+       
+        return view('admin.pages.articleCategory.detail')->with('articleCategory',$articleCategory);
     }
 
     public function update(Request $request, string $id)
     {
-        $request->validate(["name"=>"required|max:255"]);
+        $request->validate(["name"=>"required|max:255", "is_show" => 'required']);
 
         $articleCategory = ArticleCategory::find($id);
-        $articleCategory->update(['name' => $request->name]);
+        
+        $articleCategory->update(['name' => $request->name, 'is_show' => $request->is_show ,'created_at' => now(), 'updated_at' =>now()]);
 
         // return $this->index();
         return redirect()->route('article-category.index')->with('message', 'Update Successfully!');
 
     }
 
-    public function destroy(string $id)
-    {
-        $articleCategory = ArticleCategory::find($id);
-        // $articleCategory->delete();
-        $articleCategory->forceDelete();
+ 
 
+    // public function destroy(string $id)
+    // {
+    //     $articleCategory = ArticleCategory::find($id);
+    //     // $articleCategory->delete();
+    //     $articleCategory->forceDelete();
+
+    //     return redirect()->route('article-category.index');
+    // }
+
+    public function destroy(ArticleCategory $articleCategory)
+    {
+       
+        $articleCategory->delete();
         return redirect()->route('article-category.index');
     }
 }

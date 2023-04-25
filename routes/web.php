@@ -86,12 +86,14 @@ Route::prefix('admin')->middleware('auth.admin')->group(function (){ // thêm /a
 
 
     //article
-    Route::get('/article/articlelist', [ArticleController::class , 'index'])->name('admin.article.list');
-    Route::post('/article/save', [ArticleController::class, 'store'])->name('admin.article.save');
-    Route::get('/article/detail/{id}', [ArticleController::class, 'edit'])->name('admin.article.detail');
-    Route::post('/article/edit/{id}', [ArticleController::class, 'update'])->name('admin.article.edit');
-    Route::get('/article/create', [ArticleController::class, 'create'])->name('admin.article.create');
-    Route::get('/article/delete/{id}', [ArticleController::class , 'destroy'])->name('admin.article.delete');
+    Route::resource('article', ArticleController::class );
+    Route::get('article/create', [ArticleController::class, 'create'])->name('article.create');
+
+    // Route::post('/article/save', [ArticleController::class, 'store'])->name('admin.article.save');
+    // Route::get('/article/detail/{id}', [ArticleController::class, 'edit'])->name('admin.article.detail');
+    // Route::post('/article/edit/{id}', [ArticleController::class, 'update'])->name('admin.article.update');
+    // Route::get('/article/create', [ArticleController::class, 'create'])->name('admin.article.create');
+    // Route::get('/article/delete/{id}', [ArticleController::class , 'destroy'])->name('admin.article.delete');
     //article category
     Route::resource('article-category', ArticleCategoryController::class);
     Route::get('article-category/create', [ArticleCategoryController::class, 'create'])->name('article-category.create');
