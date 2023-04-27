@@ -48,7 +48,7 @@
                 </a>
               </li>
               <li class="nav-item">
-                <a href="{{ route('article.create')}}" class="nav-link {{ Request::route()->getName() === 'admin.article.create' ? 'active': '' }}">
+                <a href="{{ route('article.create')}}" class="nav-link {{ Request::route()->getName() === 'article.create' ? 'active': '' }}">
                   <i class="far fa-circle nav-icon  "></i>
                   <p>Article</p>
                 </a>

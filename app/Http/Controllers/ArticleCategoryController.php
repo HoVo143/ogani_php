@@ -12,8 +12,8 @@ class ArticleCategoryController extends Controller
     public function index()
     {
         // ------------------------dung ELOQUENT------------------------
-        // $productCategories=  ProductCategory::all();
-        $articleCategories = ArticleCategory::orderByDesc('id')->get();
+        $articleCategories=  ArticleCategory::withTrashed()->get(); // lay luon nhung deleted_at lay ra
+        // $articleCategories = ArticleCategory::orderByDesc('id')->get();
 
         return view('admin.pages.articleCategory.list', compact('articleCategories'));
         
@@ -102,6 +102,11 @@ class ArticleCategoryController extends Controller
     {
        
         $articleCategory->delete();
+        return redirect()->route('article-category.index');
+    }
+
+    public function restore($id){
+        \App\Models\ArticleCategory::withTrashed()->find($id)->restore();
         return redirect()->route('article-category.index');
     }
 }

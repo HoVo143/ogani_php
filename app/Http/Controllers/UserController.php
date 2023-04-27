@@ -123,8 +123,8 @@ class UserController extends Controller
 
 
      // -------------------------------------------delete----------------------------------------------------------------------
-     public function destroy($id){
-
+     public function destroy($id)
+     {
         // $bool = DB::delete('DELETE from user_form where id = ?' ,[$id]);
         $bool = $this->model->Deletes($id);
         
@@ -138,12 +138,13 @@ class UserController extends Controller
     }
 
 
-    public function giaodienlogin(){
-
+    public function giaodienlogin()
+    {
         return view('client.pages.login.login');
     }
 
     public function dangnhap(Request $request){
+
         $credentials = $request->validate([
             'email' => ['required', 'email'],
             'password' => ['required']

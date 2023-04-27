@@ -4,6 +4,7 @@ use App\Http\Controllers\ArticleCategoryController;
 use App\Http\Controllers\ArticleController;
 use App\Http\Controllers\BlogController;
 use App\Http\Controllers\ContactController;
+use App\Http\Controllers\GoogleLoginController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProductCategory;
 use App\Http\Controllers\ProductCategoryController;
@@ -11,8 +12,12 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ShopController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\TextSendMailController;
+use App\Models\User;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
+use Laravel\Socialite\Facades\Socialite;
+
 // client
 // Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/shop', [ShopController::class, 'index'])->name('shop');
@@ -97,6 +102,7 @@ Route::prefix('admin')->middleware('auth.admin')->group(function (){ // thêm /a
     //article category
     Route::resource('article-category', ArticleCategoryController::class);
     Route::get('article-category/create', [ArticleCategoryController::class, 'create'])->name('article-category.create');
+    Route::post('article-category/{article_category}/restore', [ArticleCategoryController::class, 'restore'])->name('article-category.restore');
 
 
 });
@@ -107,10 +113,16 @@ Auth::routes();
 
 Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::post('/product-get-slug', [ProductController::class, 'getSlug'])->name('product.get.slug');
+
 Route::post('/article-get-slug', [ArticleController::class, 'getSlug'])->name('article.get.slug');
+
 Route::post('/write/generate', [ArticleController::class, 'generate'])->name('write-generate');
 
 
 //test mail
-
 Route::get('/test-send-mail', [TextSendMailController::class, 'sendMail']);
+
+
+// dang nhap bang google
+Route::get('/auth/google/redirect',[GoogleLoginController::class, 'redirect'])->name('google.redirect'); //giao dien
+Route::get('/auth/google/callback', [GoogleLoginController::class, 'callback']); // su li dang nhap vao home

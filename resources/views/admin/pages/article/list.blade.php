@@ -1,7 +1,7 @@
 @extends('admin.layout.admin')
 
 @section('title')
-  Product list
+  article list
 @endsection
 
 @section('admin')

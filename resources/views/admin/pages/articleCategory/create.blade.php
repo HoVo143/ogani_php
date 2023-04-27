@@ -1,6 +1,6 @@
 @extends('admin.layout.admin')
 @section('title')
-  Article
+  Article category
 @endsection
 @section('admin')
 

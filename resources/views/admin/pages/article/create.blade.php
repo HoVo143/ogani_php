@@ -1,6 +1,6 @@
 @extends('admin.layout.admin')
 @section('title')
-  Product
+article
 @endsection
 @section('admin')
 
@@ -11,12 +11,12 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1 class="m-0 text-dark">Product</h1>
+            <h1 class="m-0 text-dark">article</h1>
           </div><!-- /.col -->
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
               <li class="breadcrumb-item">Home</a></li>
-              <li class="breadcrumb-item active">Dashboard v3</li>
+              <li class="breadcrumb-item active">article</li>
             </ol>
           </div><!-- /.col -->
         </div><!-- /.row -->
@@ -47,6 +47,7 @@
                     <div class="form-group">
                       <label for="title">title</label>
                       <input type="text" class="form-control" id="title" name="title" >
+                      
                       <button type="button" id="generate">Nhúng chat GPT</button>
 
                      @error('title')
