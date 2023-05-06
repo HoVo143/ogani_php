@@ -145,7 +145,9 @@ class ProductController extends Controller
             if ($request->image_url) {
                 $imageName = uniqid() . '_' . $request->image_url->getClientOriginalName();
                 $request->image_url->move(public_path('images'), $imageName);
-                unlink("images/" . $oldImage);
+                if(!is_null($oldImage) && file_exists("images/" . $oldImage)){
+                    unlink("images/" . $oldImage);
+                }
             }
 
             if (!is_null($imageName)) {

@@ -46,8 +46,8 @@
                 <table id="example2" class="table table-bordered table-hover">
                   <thead>
                   <tr>
-                    {{-- <th>id</th> --}}
                     <th>Product name</th>
+                    <th>image url</th>
                     {{-- <th>deleted at</th>
                     <th>Created at</th>
                     <th>updated at</th> --}}
@@ -59,6 +59,14 @@
                     @forelse ($productCategories as $productCategory)
                     <tr>
                         <td>{{ $productCategory->name }}</td>
+                        <td>
+                          @if ($productCategory->image_url !== null)
+                            <img style="width: 150px; height:150px;" src="{{asset('images'). '/'.$productCategory->image_url}}" alt="">
+                          @else
+                            <img style="width: 150px; height:150px; background:#ffff;">
+                          @endif
+                          {{-- <img style="width: 150px; height:150px;" src="{{asset('images'). '/'.$product->image_url}}" alt=""> --}}
+                        </td>
                         
                         <td>
                             <form method="post"

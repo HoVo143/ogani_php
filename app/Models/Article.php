@@ -22,10 +22,11 @@ class Article extends Model
         'tags',
         'is_show',
         'is_approved',
-        'article_category_id'
+        'article_category_id',
+        'count_click'
     ];
     public function category(){
-        return $this->belongsTo(ArticleCategory:: class, 'article_category_id');
+        return $this->belongsTo(ArticleCategory:: class, 'article_category_id')->withTrashed();
     }
 
     // 

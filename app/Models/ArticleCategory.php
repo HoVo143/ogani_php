@@ -11,7 +11,7 @@ class ArticleCategory extends Model
 {
     use HasFactory ,SoftDeletes;
     protected $table = 'article_category';
-    protected $fillable = ['name'];
+    // protected $fillable = ['name'];
     public $timestamps = true;
 
     protected $filltable = [

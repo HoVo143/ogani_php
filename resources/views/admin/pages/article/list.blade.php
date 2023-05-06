@@ -68,7 +68,7 @@
                 <table id="example2" class="table table-bordered table-hover">
                   <thead>
                   <tr>
-                    <th>
+                    {{-- <th>
                       <a href="{{ request()->fullUrlWithQuery([
                           'keyword' => request()->keyword ?? '',
                           'sort-by' => 'id',
@@ -79,13 +79,13 @@
                           'keyword' => request()->keyword ?? '',
                           'sort-by' => 'title',
                           'sort-type' => $sortType])}}">title</a>
-                    </th>
+                    </th> --}}
   
                     {{-- <th>title</th> --}}
-                    <th>author</th>
+                    {{-- <th>author</th> --}}
                     <th>Description</th>
-                    <th>is_show</th>
-                    <th>tags</th>
+                    <th>is show</th>
+                    {{-- <th>tags</th> --}}
                     <th>Category Name</th>
                     <th>Option</th>
                   </tr>
@@ -95,13 +95,15 @@
                       <tr>
                         <td>{{$article->id}}</td>
                         <td>{{$article->title}}</td>
-                        <td>{{$article->author}}</td>
+                        {{-- <td>{{$article->author}}</td> --}}
                         <td>{!!$article->description!!}</td>
                         <td>{{ $article->is_show ? 'Show' : 'Hide' }}</td>
-                        <td>{{$article->tags}}</td>
+                        {{-- <td>{{$article->tags}}</td> --}}
 
                         
-                        <td>{{ $article->category->name }}</td>
+                        {{-- <td>{{ $article->category->name }}</td> --}}
+                        <td>{{ $article->category_name }}</td>
+
                         <td>
                           <form method="post"
                           action="{{ route('article.destroy', ['article' => $article->id]) }}">

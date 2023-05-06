@@ -17,30 +17,39 @@ class ArticleController extends Controller
     public function index(Request $request)
     {
 
-        $filter = [];
+        // $filter = [];
         
-        if(!empty($request->keyword)){
-            $filter[] = ['title', 'like', '%' . $request->keyword . '%'];
-        }
-        if($request->is_show !== '' && !is_null($request->is_show)){
-            $filter[] = ['is_show', $request->is_show ];
-        }
+        // if(!empty($request->keyword)){
+        //     $filter[] = ['title', 'like', '%' . $request->keyword . '%'];
+        // }
+        // if($request->is_show !== '' && !is_null($request->is_show)){
+        //     $filter[] = ['is_show', $request->is_show ];
+        // }
 
-        // click thu tu
-        $sortBy = $request->input('sort-by') ?? 'id';
-        $sortType = $request->input('sort-type  ');
+        // // click thu tu
+        // $sortBy = $request->input('sort-by') ?? 'id';
+        // $sortType = $request->input('sort-type  ');
 
-        $sort = ['desc', 'asc'];
-        if(!empty($sortType) && in_array($sortType, $sort)){
-            $sortType = $sortType === 'desc' ? 'asc' : 'desc';
+        // $sort = ['desc', 'asc'];
+        // if(!empty($sortType) && in_array($sortType, $sort)){
+        //     $sortType = $sortType === 'desc' ? 'asc' : 'desc';
 
-        }else{
-            $sortType = 'desc';
-        }
+        // }else{
+        //     $sortType = 'desc';
+        // }
 
 
-        $articles = Article::where($filter)->orderBy($sortBy, $sortType)->paginate(5);
-        return view('admin.pages.article.list', compact('articles', 'sortBy', 'sortType'));
+        // $articles = Article::where($filter)->orderBy($sortBy, $sortType)->paginate(5);
+        // return view('admin.pages.article.list', compact('articles', 'sortBy', 'sortType'));
+
+
+
+        //query B
+
+        $articles = DB::table('article')->join('article_category', 'article.article_category_id', '=', 'article_category.id')
+        ->select('article.*', 'article_category.name as category_name')->paginate(5);
+        return view('admin.pages.article.list', compact('articles'));
+
     }
 
     /**

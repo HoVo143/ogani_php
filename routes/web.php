@@ -3,9 +3,9 @@
 use App\Http\Controllers\ArticleCategoryController;
 use App\Http\Controllers\ArticleController;
 use App\Http\Controllers\BlogController;
+use App\Http\Controllers\Client\HomeController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\GoogleLoginController;
-use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProductCategory;
 use App\Http\Controllers\ProductCategoryController;
 use App\Http\Controllers\ProductController;
@@ -19,10 +19,17 @@ use Illuminate\Support\Facades\Hash;
 use Laravel\Socialite\Facades\Socialite;
 
 // client
-// Route::get('/', [HomeController::class, 'index'])->name('home');
+Route::get('/', [HomeController::class, 'index'])->name('home');
+
 Route::get('/shop', [ShopController::class, 'index'])->name('shop');
 Route::get('/blog', [BlogController::class, 'index'])->name('blog');
 Route::get('/contact', [ContactController::class, 'index'])->name('contact');
+//article client
+Route::get('/show-article', [App\Http\Controllers\Client\ArticleController::class, 'show'])->name('show.article');
+
+// cart
+Route::get('/cart/add-to-cart/{id}', [App\Http\Controllers\Client\CartController::class, 'addProductToCart'])->name('cart.add-product');
+
 
 // login
 Route::get('/giaodienlogin', [UserController::class, 'giaodienlogin'])->name('giaodienlogin');
@@ -93,12 +100,6 @@ Route::prefix('admin')->middleware('auth.admin')->group(function (){ // thêm /a
     //article
     Route::resource('article', ArticleController::class );
     Route::get('article/create', [ArticleController::class, 'create'])->name('article.create');
-
-    // Route::post('/article/save', [ArticleController::class, 'store'])->name('admin.article.save');
-    // Route::get('/article/detail/{id}', [ArticleController::class, 'edit'])->name('admin.article.detail');
-    // Route::post('/article/edit/{id}', [ArticleController::class, 'update'])->name('admin.article.update');
-    // Route::get('/article/create', [ArticleController::class, 'create'])->name('admin.article.create');
-    // Route::get('/article/delete/{id}', [ArticleController::class , 'destroy'])->name('admin.article.delete');
     //article category
     Route::resource('article-category', ArticleCategoryController::class);
     Route::get('article-category/create', [ArticleCategoryController::class, 'create'])->name('article-category.create');
@@ -111,7 +112,7 @@ Route::prefix('admin')->middleware('auth.admin')->group(function (){ // thêm /a
 
 Auth::routes();
 
-Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+// Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::post('/product-get-slug', [ProductController::class, 'getSlug'])->name('product.get.slug');
 
 Route::post('/article-get-slug', [ArticleController::class, 'getSlug'])->name('article.get.slug');

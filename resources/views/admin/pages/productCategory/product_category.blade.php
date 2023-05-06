@@ -55,7 +55,11 @@
                         </span>
                       @enderror
                     </div>
-  
+                    <div class="form-group">
+                      <label for="image_url">Product image</label>
+                      <input type="file" class="form-control" id="image_url" name="image_url" placeholder="Product image">
+                      
+                    </div>
                   <div class="card-footer">
                     <button type="submit" class="btn btn-primary">Submit</button>
                   </div>
