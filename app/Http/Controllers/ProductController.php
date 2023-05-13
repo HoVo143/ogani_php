@@ -32,6 +32,7 @@ class ProductController extends Controller
 
         // $products = Product::orderBy('id', 'desc')->paginate(3); // phan trang //dùng orderby để những product mới nhất đc đem lên đầu
 
+        ///////////////////////////////////////////////////////////////////////
         $filter = [];
         
         if(!empty($request->keyword)){
@@ -56,6 +57,13 @@ class ProductController extends Controller
 
         $products = Product::where($filter)->orderBy($sortBy, $sortType)->paginate(3);
         return view('admin.pages.product.productlist', compact('products', 'sortBy', 'sortType'));
+
+        // $product = Product::with('category');
+
+        // $products = DB::table('product')->join('product_category', 'product.product_category', '=', 'product_category.id')
+        //             ->select('product.*', 'product_category.name as product_category_name')
+        //             ->get();
+        // return view('admin.pages.product.productlist', compact('products'));
     }
 
     /**

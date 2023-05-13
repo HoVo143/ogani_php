@@ -48,9 +48,11 @@
                             <span>All departments</span>
                         </div>
                         <ul style="display: none">
-                            @foreach ( $productCategories as $productCategorie)
-                            <li><a href="#">{{ $productCategorie->name }}</a></li>
-                            @endforeach
+                            @if (isset($productCategories))
+                                @foreach ( $productCategories as $productCategorie)
+                                <li><a href="#">{{ $productCategorie->name }}</a></li>
+                                @endforeach
+                            @endif
                             
                         </ul>
                     </div>
@@ -93,6 +95,7 @@
     <!-- Footer Section End -->
 
     <!-- Js Plugins -->
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <script src="{{ asset('assets/js/jquery-3.3.1.min.js')}}"></script>
     <script src="{{ asset('assets/js/bootstrap.min.js')}}"></script>
     <script src="{{ asset('assets/js/jquery.nice-select.min.js')}}"></script>

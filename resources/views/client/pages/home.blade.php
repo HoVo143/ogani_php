@@ -63,7 +63,7 @@
                                 <ul class="featured__item__pic__hover">
                                     <li><a href="#"><i class="fa fa-heart"></i></a></li>
                                     <li><a href="#"><i class="fa fa-retweet"></i></a></li>
-                                    <li><a href="#"><i class="fa fa-shopping-cart" data-url="{{route('cart.add-product', ['id' => $product->id]) }}"></i></a></li>
+                                    <li><a class="add-to-cart" href="#" data-url="{{route('cart.add-product', ['id' => $product->id]) }}"><i class="fa fa-shopping-cart" ></i></a></li>
                                 </ul>
                             </div>
                             <div class="featured__item__text">
@@ -250,14 +250,20 @@
 
             // link /cart/add-to-cart/{id}
 
-            $('.fa-shopping-cart').on('click', function(event){
+            $('a.add-to-cart').on('click', function(event){
                 event.preventDefault();
                 var url = $(this).data('url');
                 $.ajax({
                     type: "GET",
                     url: url,
                     success: function(res){
+                        swal("Good job!", "You clicked the button!", "success");
                         console.log(res);
+                    },
+                    statusCode: {
+                        401: function(){
+                            window.location.href = "{{route('login')}}";
+                        }
                     }
                 })
             });

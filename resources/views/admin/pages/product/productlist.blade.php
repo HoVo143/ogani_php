@@ -126,6 +126,8 @@
                         {{-- <td>{{ Carbon\Carbon::parse($product->created_at)->format('d/m/Y H:i:s')}}</td> --}}
                         
                         <td>{{ $product->category->name }}</td>
+                        {{-- <td>{{ $product->product_category_name}}</td> --}}
+
                         <td>
                           <a href="{{ route('admin.product.detail', ['id' => $product->id]) }}">Detail</a>
                           <a onclick="return confirm('xoa ko ?');" href="{{ route('admin.product.delete', ['id' => $product->id])}}" class="btn btn-danger">Delete</a>

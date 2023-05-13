@@ -28,7 +28,14 @@
                             </ul>
                         </div>
                         <div class="header__top__right__auth">
-                            <a href="#"><i class="fa fa-user"></i> Login</a>
+
+                            @guest
+                                <a href="#"><i class="fa fa-user"></i> Login</a>
+                            @endguest
+                            @auth
+                                <span>{{Auth::user()->name}}</span>
+                            @endauth
+
                         </div>
                     </div>
                 </div>
@@ -69,6 +76,9 @@
                         <li class="{{ Request::route()->getName() === 'giaodienlogin' ? 'active': '' }}">
                             <a href="{{ route('giaodienlogin')}}">Login</a>
                         </li>
+                        <li class="{{ Request::route()->getName() === 'checkout' ? 'active': '' }}">
+                            <a href="{{ route('checkout')}}">Checkout</a>
+                        </li>
                     </ul>
                 </nav>
             </div>
@@ -76,7 +86,7 @@
                 <div class="header__cart">
                     <ul>
                         <li><a href="#"><i class="fa fa-heart"></i> <span>1</span></a></li>
-                        <li><a href="#"><i class="fa fa-shopping-bag"></i> <span>3</span></a></li>
+                        <li><a href="{{ route('cart.cart')}}"><i class="fa fa-shopping-bag"></i> <span>3</span></a></li>
                     </ul>
                     <div class="header__cart__price">item: <span>$150.00</span></div>
                 </div>

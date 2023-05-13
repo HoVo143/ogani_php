@@ -140,6 +140,7 @@ class UserController extends Controller
 
     public function giaodienlogin()
     {
+        
         return view('client.pages.login.login');
     }
 
